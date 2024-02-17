@@ -1,0 +1,72 @@
+* {
+   padding: 0px;
+   margin: 0px;
+   box-sizing: border-box;
+}
+
+body {
+   position: relative;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 100vw;
+   height: 100vh;
+   overflow: hidden;
+}
+
+#scroll {
+   position: relative;
+   display: flex;
+   justify-content: center;
+   height: 100vh;
+   width: 100vw;
+   overflow-y: scroll;
+   overflow-x: hidden;
+}
+
+#canvas {
+   background-color: rgb(127, 253, 255);
+}
+
+canvas {
+   background-color: none;
+   position: absolute;
+   left: 0px;
+   width: 100%;
+   height: 500vh;
+}
+
+#msg {
+   z-index: 10;
+   text-align: center;
+   position: absolute;
+   bottom: 3vh;
+   width: clamp(250px, 20%, 50vw);
+   background-color: #3333335d;
+   inset: none;
+   border: none;
+   height: 35px;
+   border-radius: 20px;
+   -webkit-border-radius: 20px;
+   -moz-border-radius: 20px;
+   -ms-border-radius: 20px;
+   -o-border-radius: 20px;
+   padding: 10px 20px;
+   font-size: 20px;
+   color: aliceblue;
+   font-weight: bolder;
+   transition: all 0.1s ease;
+   -webkit-transition: all 0.1s ease;
+   -moz-transition: all 0.1s ease;
+   -ms-transition: all 0.1s ease;
+   -o-transition: all 0.1s ease;
+}
+
+#msg::placeholder {
+   color: rgba(240, 248, 255, 0.767);
+}
+
+#msg:focus {
+   background-color: #3333339c;
+   outline: none;
+}
