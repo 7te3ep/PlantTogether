@@ -62,7 +62,6 @@ function drawTree(plant, len, width, x, y) {
    canvas.width = window.innerWidth;
    canvas.height = window.innerHeight;
    ctx.lineWidth = width;
-   console.log("END", plant);
    ctx.strokeStyle = "#955E42";
    ctx.translate(window.innerWidth / 2, window.innerHeight);
    plant.split("").forEach((symb) => {
@@ -143,7 +142,6 @@ let len = 0;
 let tree = genTree("X", 1);
 let index = 0;
 function animate() {
-   console.log(len);
    t++;
    len += 0.1;
    drawTree(tree, len, 15);

@@ -8,4 +8,4 @@ cW.width = window.innerWidth;
 cW.height = window.innerHeight * 5;
 const ctxW = cW.getContext("2d");
 
-export { ctx, ctxW };
+export { ctx, ctxW, c, cW };

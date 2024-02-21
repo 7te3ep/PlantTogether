@@ -25,7 +25,16 @@ body {
 }
 
 #canvas {
-   background-color: rgb(127, 253, 255);
+   background: rgb(255, 255, 255);
+   background: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(190, 224, 251, 1) 14%,
+      rgba(125, 188, 243, 1) 24%,
+      rgba(50, 146, 223, 1) 38%,
+      rgba(0, 100, 182, 1) 57%,
+      rgba(0, 20, 36, 1) 100%
+   );
 }
 
 canvas {
@@ -36,11 +45,57 @@ canvas {
    height: 500vh;
 }
 
-#msg {
+button {
+   z-index: 10;
+   position: absolute;
+   inset: none;
+   border: none;
+   background-color: #3333;
+   min-width: 50px;
+   min-height: 50px;
+   font-size: 20px;
+   border-radius: 20px;
+   -webkit-border-radius: 20px;
+   -moz-border-radius: 20px;
+   -ms-border-radius: 20px;
+   -o-border-radius: 20px;
+   color: #ffffff;
+   transition: transform 0.1s ease;
+   -webkit-transition: transform 0.1s ease;
+   -moz-transition: transform 0.1s ease;
+   -ms-transition: transform 0.1s ease;
+   -o-transition: transform 0.1s ease;
+}
+
+button:hover,
+button:active {
+   transform: scale(1.1);
+   -webkit-transform: scale(1.1);
+   -moz-transform: scale(1.1);
+   -ms-transform: scale(1.1);
+   -o-transform: scale(1.1);
+   background-color: #ffffff;
+   color: #333;
+}
+
+#show {
+   top: 2vh;
+   left: 2vh;
+}
+
+#help {
+   top: 2vh;
+   right: 2vh;
+}
+
+#chat {
    z-index: 10;
    text-align: center;
    position: absolute;
    bottom: 3vh;
+}
+
+#msg {
    width: clamp(250px, 20%, 50vw);
    background-color: #3333335d;
    inset: none;
