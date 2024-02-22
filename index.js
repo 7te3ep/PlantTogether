@@ -5,110 +5,87 @@ import { nextGen } from "./utils/nextGen.js";
 import { Water } from "./utils/Water.js";
 import { Server } from "./utils/server.js";
 const scroll = document.getElementById("scroll");
-const chat = document.getElementById("chat");
+const chat = document.getElementById("chatInput");
 const input = document.getElementById("msg");
 const showBtn = document.getElementById("show");
 const helpBtn = document.getElementById("help");
 const server = new Server();
 scroll.scrollTo(0, window.innerHeight * config.canvasHeight);
 
-let mouse = false,
-   showChat = true,
-   growing = 0,
-   lastGrow = 0,
-   pointerId = Math.round(Math.random() * 100 * Math.random() * 100);
+let showChat = true,
+   lastMsg = Date.now();
 
-let tree = await server.getData("tree/plant");
-server.exeOnChange("tree/grow", updateGrow);
-server.exeOnChange("tree/plant", updateTree);
-let water = [];
+server.exeOnChange("tree/grow", draw);
+server.exeOnChange("tree/plant", draw);
+server.exeOnChange("chat", updateChat);
 
-async function end() {
-   mouse = false;
-   await server.setData(`pointer/${pointerId}`, null);
-}
-addEventListener("mousedown", async () => (mouse = true));
-addEventListener("mouseup", end);
-addEventListener("mousemove", (e) => spray(e));
 chat.addEventListener("submit", (event) => sendMsg(event));
-showBtn.addEventListener("click", (event) => {
+showBtn.addEventListener("click", (event) => showBtnClick());
+helpBtn.addEventListener("click", (e) => {
+   window.open("help.html", "_blank");
+});
+addEventListener("resize", (e) => resize(e));
+
+async function sendMsg(e) {
+   e.preventDefault();
+   if (input.value.length == 0) return;
+   if (Date.now() - lastMsg < 1000) return;
+   lastMsg = Date.now();
+   await server.setData("lastMsg", lastMsg);
+   const grow = await server.getData("tree/grow");
+   const tree = await server.getData("tree/plant");
+   const nextGrow = grow + 1 / tree.length;
+   if (nextGrow >= 1) {
+      await server.setData("tree/grow", 0.1);
+      await server.setData("tree/plant", nextGen(tree));
+   } else await server.setData("tree/grow", nextGrow);
+
+   let chat = Object.values((await server.getData("chat")) || {});
+   if (chat.length == 14) chat.pop();
+   chat.unshift(input.value);
+   await server.setData("chat", chat);
+   input.value = "";
+}
+
+function showBtnClick() {
    document.getElementById("hideIcon").style.display = showChat
       ? "none"
       : "block";
    document.getElementById("showIcon").style.display = showChat
       ? "block"
       : "none";
+
+   document.getElementById("chatArea").style.display = showChat
+      ? "flex"
+      : "none";
    showChat = !showChat;
-});
-addEventListener("resize", (e) => resize(e));
-
-function sendMsg(e) {
-   e.preventDefault();
-   input.value = "";
 }
 
-async function updateGrow() {
-   growing = await server.getData("tree/grow");
-   if (Math.round(growing * 10000) / 10000 == lastGrow) return;
-   draw();
-   lastGrow = Math.round(growing * 10000) / 10000;
-}
+async function draw() {
+   const last = await server.getData("lastMsg");
+   if (Date.now() - last > 86400000) {
+      await server.setData("tree/grow", 0);
+      await server.setData("tree/plant", "F");
+   }
 
-async function updateTree() {
-   tree = await server.getData("tree/plant");
-   draw();
-}
-
-function draw() {
    ctx.reset();
-   drawTree(tree, growing);
+   drawTree(
+      await server.getData("tree/plant"),
+      await server.getData("tree/grow")
+   );
    drawPot();
 }
 
-async function animate() {
-   const pointer = (await server.getData("pointer")) || {};
-
-   ctxW.clearRect(
-      0,
-      0,
-      window.innerWidth,
-      window.innerHeight * config.canvasHeight
-   );
-
-   Object.values(pointer).forEach((el) => {
-      let vx = +5 - Math.floor(Math.random() * 10);
-      let vy = +5 - Math.floor(Math.random() * 10);
-      water.push(new Water(el.x, el.y, vx, vy));
+async function updateChat() {
+   let chat = document.getElementById("chatBox");
+   chat.innerHTML = ``;
+   Object.values((await server.getData("chat")) || {}).forEach((el) => {
+      let div = document.createElement("div");
+      div.classList.add("msg");
+      let text = document.createTextNode(el);
+      div.appendChild(text);
+      chat.appendChild(div);
    });
-   for (let i in water) {
-      const el = water[i];
-      el.update();
-      el.draw();
-      if (el.y > window.innerHeight * 5) water.splice(i, 1);
-   }
-   requestAnimationFrame(animate);
-}
-
-async function spray(e, mobile = false) {
-   e.preventDefault();
-   if (!mouse) return;
-   if (mobile) {
-      var touchLocation = e.targetTouches[0];
-      await server.setData(`pointer/${pointerId}`, {
-         x: touchLocation.pageX,
-         y: touchLocation.clientY + scroll.scrollTop,
-      });
-   } else {
-      await server.setData(`pointer/${pointerId}`, {
-         x: e.pageX,
-         y: e.clientY + scroll.scrollTop,
-      });
-   }
-
-   if (growing + 1 / tree.length >= 1) {
-      await server.setData("tree/grow", 0.1);
-      await server.setData("tree/plant", nextGen(tree));
-   } else await server.setData("tree/grow", growing + 0.001 / tree.length);
 }
 
 function resize(e) {
@@ -116,7 +93,6 @@ function resize(e) {
    c.width = window.innerWidth;
    cW.height = window.innerHeight * 5;
    cW.width = window.innerWidth;
+   scroll.scrollTo(0, window.innerHeight * config.canvasHeight);
    draw();
 }
-
-animate();

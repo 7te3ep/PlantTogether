@@ -1,38 +1,11 @@
 import config from "../config.js";
 import { ctx } from "./canvas.js";
 
-function drawLeaves(i, grow = 1) {
-   const size = config.tree.len * grow;
-
-   ctx.save();
-   ctx.globalAlpha = 0.8;
-   ctx.fillStyle = config.tree.leafColors[i];
-   ctx.scale(size / 2, size);
-   ctx.beginPath();
-   ctx.moveTo(0, 0);
-   ctx.lineTo(1, -1);
-   ctx.lineTo(0, -4);
-   ctx.lineTo(-1, -1);
-   ctx.lineTo(0, 0);
-   ctx.closePath();
-   ctx.fill();
-   ctx.restore();
-}
-
-function drawBranch(growingLen = config.tree.len) {
-   ctx.beginPath();
-   ctx.strokeStyle = "#5FC73D";
-   ctx.moveTo(0, 0);
-   ctx.lineTo(0, -growingLen);
-   ctx.stroke();
-   ctx.translate(0, -growingLen + 1);
-}
-
 export function drawTree(plant, grow) {
    ctx.resetTransform();
    ctx.lineWidth = config.tree.width;
    ctx.translate(
-      window.innerWidth / 2,
+      window.innerWidth - window.innerWidth / config.x,
       window.innerHeight * config.canvasHeight - 220
    );
    let leafIndex = 0;
@@ -78,14 +51,52 @@ export function drawTree(plant, grow) {
             isGrowing = false;
             break;
 
-         //case "B":
-         //   ctx.fillStyle = "yellow";
-         //   ctx.beginPath();
-         //   ctx.arc(0, 0, 10, 0, 2 * Math.PI);
-         //   ctx.fill();
-         //   break;
+         case "B":
+            ctx.fillStyle = "yellow";
+            ctx.beginPath();
+            ctx.arc(0, 0, 5, 0, 2 * Math.PI);
+            ctx.fill();
+            break;
+
+         case "R":
+            ctx.fillStyle = "pink";
+            ctx.save();
+            ctx.beginPath();
+            for (let i = 0; i <= 3; i++) {
+               ctx.rotate(90);
+               ctx.ellipse(0, 0, 5, 10, Math.PI / 4, 0, 2 * Math.PI);
+            }
+            ctx.fill();
+            ctx.restore();
       }
    }
+}
+
+function drawLeaves(i, grow = 1) {
+   const size = config.tree.len * grow;
+
+   ctx.save();
+   ctx.globalAlpha = 0.8;
+   ctx.fillStyle = config.tree.leafColors[i];
+   ctx.scale(size / 2, size);
+   ctx.beginPath();
+   ctx.moveTo(0, 0);
+   ctx.lineTo(1, -1);
+   ctx.lineTo(0, -4);
+   ctx.lineTo(-1, -1);
+   ctx.lineTo(0, 0);
+   ctx.closePath();
+   ctx.fill();
+   ctx.restore();
+}
+
+function drawBranch(growingLen = config.tree.len) {
+   ctx.beginPath();
+   ctx.strokeStyle = "#5FC73D";
+   ctx.moveTo(0, 0);
+   ctx.lineTo(0, -growingLen);
+   ctx.stroke();
+   ctx.translate(0, -growingLen + 1);
 }
 
 export function drawPot() {
@@ -100,7 +111,7 @@ export function drawPot() {
 
    ctx.save();
    ctx.translate(
-      window.innerWidth / 2 - size / 2,
+      window.innerWidth - window.innerWidth / config.x - size / 2,
       window.innerHeight * config.canvasHeight - 20
    );
    ctx.fillStyle = "#b05923";

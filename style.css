@@ -25,6 +25,9 @@ body {
 }
 
 #canvas {
+}
+
+.day {
    background: rgb(255, 255, 255);
    background: linear-gradient(
       0deg,
@@ -34,6 +37,39 @@ body {
       rgba(50, 146, 223, 1) 38%,
       rgba(0, 100, 182, 1) 57%,
       rgba(0, 20, 36, 1) 100%
+   );
+}
+
+.night {
+   background: rgb(81, 118, 166);
+   background: linear-gradient(
+      0deg,
+      rgba(81, 118, 166, 1) 0%,
+      rgba(64, 85, 158, 1) 13%,
+      rgba(9, 13, 97, 1) 32%,
+      rgba(0, 0, 0, 1) 85%
+   );
+}
+
+.morning {
+   background: rgb(223, 223, 199);
+   background: linear-gradient(
+      0deg,
+      rgba(223, 223, 199, 1) 0%,
+      rgba(146, 214, 235, 1) 20%,
+      rgba(103, 174, 195, 1) 68%,
+      rgba(9, 76, 97, 1) 100%
+   );
+}
+
+.evening {
+   background: rgb(218, 139, 241);
+   background: linear-gradient(
+      0deg,
+      rgba(218, 139, 241, 1) 0%,
+      rgba(146, 159, 235, 1) 11%,
+      rgba(105, 117, 197, 1) 33%,
+      rgba(9, 13, 97, 1) 83%
    );
 }
 
@@ -88,16 +124,68 @@ button:active {
    right: 2vh;
 }
 
-#chat {
-   z-index: 10;
-   text-align: center;
+#chatArea {
    position: absolute;
+   display: flex;
+   left: 0px;
+   height: 80vh;
+   width: 50vw;
+   max-width: 500px;
+   padding: 20px;
+   align-items: start;
+   justify-content: center;
+}
+
+#chatBox {
+   height: 90%;
+   width: 100%;
+   padding: 0px 30px;
+   display: flex;
+   flex-direction: column-reverse;
+   text-align: left;
+   overflow-x: hidden;
+   overflow-y: scroll;
+   scrollbar-width: none;
+}
+
+#chatBox::-webkit-scrollbar {
+   display: none; /* Safari and Chrome */
+}
+
+.msg {
+   margin: 3px 0px;
+   padding: 10px;
+   border-radius: 12px;
+   background-color: #33333361;
+   font-size: 20px;
+   font-family: Arial;
+   font-weight: bolder;
+   z-index: 10;
+   display: inline;
+   height: fit-content;
+   width: 100%;
+   color: #f3f3f3;
+   -webkit-border-radius: 12px;
+   -moz-border-radius: 12px;
+   -ms-border-radius: 12px;
+   -o-border-radius: 12px;
+   word-wrap: break-word;
+}
+
+#chatInput {
+   z-index: 10;
+   position: absolute;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   height: 10%;
+   width: 100%;
    bottom: 3vh;
 }
 
 #msg {
-   width: clamp(250px, 20%, 50vw);
-   background-color: #3333335d;
+   text-align: center;
+   background-color: #333333a6;
    inset: none;
    border: none;
    height: 35px;

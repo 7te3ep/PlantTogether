@@ -1,6 +1,7 @@
 export default {
    preset: 0,
    canvasHeight: 5,
+   x: 3,
    tree: {
       len: 10,
       width: 5,
@@ -19,6 +20,20 @@ export default {
                {
                   value: "F([+F]F[-F]F)",
                   prob: 1,
+               },
+            ],
+            "]": [
+               {
+                  value: "B]",
+                  prob: 0.2,
+               },
+               {
+                  value: "R]",
+                  prob: 0.1,
+               },
+               {
+                  value: "]",
+                  prob: 0.7,
                },
             ],
             "(": [

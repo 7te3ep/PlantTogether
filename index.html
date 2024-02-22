@@ -17,12 +17,20 @@
    <button id="help">
       <i class="fa-solid fa-question"></i>
    </button>
-   <form id="chat">
-      <input placeholder="write a message here" type="text" name="msg" id="msg">
-   </form>
+
+
+   <section id="chatArea">
+      <div id="chatBox">
+
+      </div>
+      <form id="chatInput">
+         <input placeholder="write a message here" type="text" name="msg" id="msg" minlength="2" maxlength="120">
+      </form>
+
+   </section>
    <div id="scroll">
       <div id="screen">
-         <canvas class="canvas" id="canvas"></canvas>
+         <canvas class="canvas night" id="canvas"></canvas>
          <canvas class="canvas" id="water"></canvas>
       </div>
    </div>
