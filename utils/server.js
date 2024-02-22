@@ -34,7 +34,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
-let dev = "dev";
+let dev = "";
 export class Server {
    async setData(path, data) {
       await set(ref(database, dev + path), data);
