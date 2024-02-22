@@ -34,21 +34,21 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
-
+let dev = "dev";
 export class Server {
    async setData(path, data) {
-      await set(ref(database, path), data);
+      await set(ref(database, dev + path), data);
    }
 
    async getData(path) {
-      return ((await get(ref(database, path))) || {}).val();
+      return ((await get(ref(database, dev + path))) || {}).val();
    }
 
    async exeOnChange(path, func) {
-      await onValue(ref(database, path), await func);
+      await onValue(ref(database, dev + path), await func);
    }
 
    async stopExeOnChange(path) {
-      await off(ref(database, path));
+      await off(ref(database, dev + path));
    }
 }

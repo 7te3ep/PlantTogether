@@ -5,7 +5,8 @@ const ctx = c.getContext("2d");
 
 let hour = new Date();
 hour = hour.getHours();
-
+console.log(hour);
+c.classList.remove("night");
 if (hour > 11 && hour < 18) {
    c.classList.add("day");
 } else if (hour > 18 && hour < 23) {

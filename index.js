@@ -34,7 +34,7 @@ async function sendMsg(e) {
    await server.setData("lastMsg", lastMsg);
    const grow = await server.getData("tree/grow");
    const tree = await server.getData("tree/plant");
-   const nextGrow = grow + 1 / tree.length;
+   const nextGrow = grow + 1000 / tree.length;
    if (nextGrow >= 1) {
       await server.setData("tree/grow", 0.1);
       await server.setData("tree/plant", nextGen(tree));
