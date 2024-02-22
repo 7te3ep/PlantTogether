@@ -6,7 +6,7 @@ export function drawTree(plant, grow) {
    ctx.lineWidth = config.tree.width;
    ctx.translate(
       window.innerWidth - window.innerWidth / config.x,
-      window.innerHeight * config.canvasHeight - 220
+      window.innerHeight * config.canvasHeight - window.innerWidth / 5 - 20
    );
    let leafIndex = 0;
    let isGrowing = false;
@@ -100,7 +100,7 @@ function drawBranch(growingLen = config.tree.len) {
 }
 
 export function drawPot() {
-   let size = 200;
+   let size = window.innerWidth / 5;
    ctx.resetTransform();
 
    ctx.save();
