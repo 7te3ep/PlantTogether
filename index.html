@@ -4,29 +4,16 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Plant Together</title>
+   <title>random L system Demo</title>
    <link rel="stylesheet" href="style.css">
    <script src="https://kit.fontawesome.com/1555c59d50.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-   <button id="show">
-      <i id="showIcon" class="fa-solid fa-eye"></i>
-      <i id="hideIcon" style="display: none;" class="fa-solid fa-eye-slash"></i>
-   </button>
-   <button id="help">
-      <i class="fa-solid fa-question"></i>
-   </button>
 
-
-   <section id="chatArea">
-      <div id="chatBox">
-
-      </div>
-      <form id="chatInput">
-         <input placeholder="write a message here" type="text" name="msg" id="msg" minlength="2" maxlength="120">
-      </form>
-
+   <section id="tweak">
+      <input step="0.05" min="0" max="1" value="0" type="range" id="grow">
+      <input type="range" min="0" max="5" step="1" id="gen" value="0">
    </section>
    <div id="scroll">
       <div id="screen">

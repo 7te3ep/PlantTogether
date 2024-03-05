@@ -1,5 +1,5 @@
 import config from "../config.js";
-const rules = config.rules[config.preset].rule;
+import pool from "../pool.js";
 
 export function nextGen(tree) {
    function getRandomRule(array) {
@@ -9,13 +9,13 @@ export function nextGen(tree) {
             rules.push(rule);
          }
       });
-      return rules[Math.floor(Math.random() * rules.length)].value;
+      return array[Math.floor(Math.random() * array.length)].value;
    }
 
    tree = tree.split("");
 
    for (let i = 0; i < tree.length; i++) {
-      if (rules[tree[i]]) tree[i] = getRandomRule(rules[tree[i]]);
+      if (pool.rules[tree[i]]) tree[i] = getRandomRule(pool.rules[tree[i]]);
       if (tree[i] == "(" || tree[i] == ")") tree[i] = "";
    }
 

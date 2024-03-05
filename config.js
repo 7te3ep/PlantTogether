@@ -1,54 +1,16 @@
 export default {
    preset: 0,
    canvasHeight: 5,
-   x: 3,
+   x: 2,
    tree: {
-      len: 10,
+      len: 30,
       width: 5,
       shrinking: 0.03,
-      leafColors: ["#337B47", "#5DC939", "#40B225", "#077F20"],
+      leafColors: ["#2F4B26", "#50a163", "#789742"],
+      leafColors1: ["#337B47", "#5DC939", "#40B225", "#077F20"],
       leafAlpha: 0.8,
-      trunkColor: "#5FC73D",
+      trunkColor: "#5A3A31",
       minTrunkWidth: 3,
       angle: 25,
    },
-   rules: [
-      {
-         axiom: "F",
-         rule: {
-            F: [
-               {
-                  value: "F([+F]F[-F]F)",
-                  prob: 1,
-               },
-            ],
-            "]": [
-               {
-                  value: "B]",
-                  prob: 0.2,
-               },
-               {
-                  value: "R]",
-                  prob: 0.1,
-               },
-               {
-                  value: "]",
-                  prob: 0.7,
-               },
-            ],
-            "(": [
-               {
-                  value: "",
-                  prob: 1,
-               },
-            ],
-            ")": [
-               {
-                  value: "",
-                  prob: 1,
-               },
-            ],
-         },
-      },
-   ],
 };
